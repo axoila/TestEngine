@@ -26,75 +26,17 @@ int main(int argc, char *args[])
 	Transform* transform = new Transform();
 	object->AddComponent(transform);
 
-	Vertex cube[] = {
-		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
-		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+	std::vector<glm::vec3> positions = {glm::vec3(-1, -1, -1), glm::vec3(-1, 1, -1), glm::vec3(1, -1, -1) };
+	std::vector<glm::vec2> texCoords = {glm::vec2(0,0), glm::vec2(0,1), glm::vec2(1,0)};
 
-		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
-		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
+	std::vector<GLuint> indices = { 0, 1, 2 };
 
-
-		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
-		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-
-		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
-
-
-		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-
-		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-
-
-		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
-		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-
-		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
-
-
-		Vertex(glm::vec3(1, -1, -1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-		Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
-
-		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
-		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-
-		
-		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
-
-		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(1,1)),
-		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
-		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)), };
-
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> texCoords;
-
-
-	for (unsigned int i = 0; i < sizeof(cube) / sizeof(cube[0]); i++) {
-		positions.push_back(cube[i].getPos());
-		texCoords.push_back(cube[i].getUv());
-	}
-
-	Mesh* mesh = new Mesh(&positions, &texCoords);
+	Mesh* mesh = new Mesh(&indices, &positions, &texCoords);
 
 	Shader* shader = new Shader("./VertexShader.glsl", "./FragmentShader.glsl");
 	Property* texture = new TextureProperty("MainTex", new Texture("./colorgrid.png"));
 	Material* material = new Material(shader);
-	material->SetCull(Material::GREATER);
+	material->SetCull(Material::NONE);
 	material->SetDepthTest(Material::LESS);
 
 	MeshRenderer* renderer = new MeshRenderer(mesh, material);

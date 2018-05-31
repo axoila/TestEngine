@@ -42,8 +42,8 @@ void MeshRenderer::Draw() {
 		mvpProperty->SetValue(GetMvpMatrix());
 	}
 
-	
-	glDrawArrays(GL_TRIANGLES, 0, renderMesh->getDrawCount());
+	glDrawElements(GL_TRIANGLES, renderMesh->getDrawCount(), GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, renderMesh->getDrawCount());
 
 	glBindVertexArray(0);
 }

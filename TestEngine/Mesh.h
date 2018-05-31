@@ -4,31 +4,13 @@
 #include <GL/glew.h>
 #include <vector>
 
-class Vertex {
-public:
-	Vertex(const glm::vec3& pos, const glm::vec2& uv) {
-		this->pos = pos;
-		this->uv = uv;
-	}
-
-	inline glm::vec3& getPos() {
-		return pos;
-	}
-	inline glm::vec2& getUv() {
-		return uv;
-	}
-private:
-	glm::vec3 pos;
-	glm::vec2 uv;
-};
-
 class Mesh
 {
 public:
-	Mesh(std::vector<glm::vec3>* positions, std::vector<glm::vec2>* texCoords);
+	Mesh(std::vector<GLuint>* indices, std::vector<glm::vec3>* positions, std::vector<glm::vec2>* texCoords);
 	~Mesh();
 
-	static std::vector<Mesh>& FromObj(std::string filePath);
+	static void FromObj(std::string filePath, std::vector<Mesh>* output);
 
 	void bindMesh();
 	GLuint getDrawCount() {
@@ -40,8 +22,12 @@ private:
 		POSITION_VB,
 		TEXCOORD_VB,
 
-		NUM_BUFFERS
+		INDEX_VB,
+
+		NUM_BUFFERS,
 	};
+
+	std::vector<GLuint> indices;
 
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
