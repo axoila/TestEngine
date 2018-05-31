@@ -10,14 +10,20 @@ public:
 	Mesh(std::vector<GLuint>* indices, std::vector<glm::vec3>* positions, std::vector<glm::vec2>* texCoords);
 	~Mesh();
 
-	static void FromObj(std::string filePath, std::vector<Mesh>* output);
+	static void FromObj(std::string filePath, std::vector<Mesh*>& output);
 
 	void bindMesh();
-	GLuint getDrawCount() {
+	size_t getDrawCount() {
 		return drawCount;
 	}
 
+	std::vector<glm::vec3>& GetPositions() {
+		return positions;
+	}
+
 private:
+	Mesh(Mesh& original);
+
 	enum {
 		POSITION_VB,
 		TEXCOORD_VB,
@@ -36,5 +42,5 @@ private:
 	GLuint vertexArrayObject;
 	GLuint vertexArrayBuffer[NUM_BUFFERS];
 
-	unsigned int drawCount;
+	size_t drawCount;
 };

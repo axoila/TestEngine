@@ -135,6 +135,12 @@
     <None Include="VertexShader.glsl">
       <Filter>res</Filter>
     </None>
+    <None Include="SimpleCube.obj">
+      <Filter>res</Filter>
+    </None>
+    <None Include="MonkeyMesh.obj">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="colorgrid.png">

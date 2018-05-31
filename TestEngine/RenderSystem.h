@@ -35,13 +35,15 @@ public:
 
 	bool Running();
 
+	std::vector<Renderer*> renderers; //TODO make this private again
+
 private:
 	RenderSystem();
 
 	void Clear();
 	SDL_Window* MakeWindow(const char* header);
 
-	std::vector<Renderer*> renderers;
+	
 
 	const char* title;
 	bool isRunning = false;

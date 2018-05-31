@@ -11,6 +11,7 @@
 #include "TextureProperty.h"
 #include "Camera.h"
 #include "RenderSystem.h"
+#include "MeshRenderer.h"
 
 Game *game;
 
@@ -26,12 +27,9 @@ int main(int argc, char *args[])
 	Transform* transform = new Transform();
 	object->AddComponent(transform);
 
-	std::vector<glm::vec3> positions = {glm::vec3(-1, -1, -1), glm::vec3(-1, 1, -1), glm::vec3(1, -1, -1) };
-	std::vector<glm::vec2> texCoords = {glm::vec2(0,0), glm::vec2(0,1), glm::vec2(1,0)};
+	std::vector<Mesh*> meshes = std::vector<Mesh*>();
 
-	std::vector<GLuint> indices = { 0, 1, 2 };
-
-	Mesh* mesh = new Mesh(&indices, &positions, &texCoords);
+	Mesh::FromObj("./MonkeyMesh.obj", meshes);
 
 	Shader* shader = new Shader("./VertexShader.glsl", "./FragmentShader.glsl");
 	Property* texture = new TextureProperty("MainTex", new Texture("./colorgrid.png"));
@@ -39,8 +37,12 @@ int main(int argc, char *args[])
 	material->SetCull(Material::NONE);
 	material->SetDepthTest(Material::LESS);
 
-	MeshRenderer* renderer = new MeshRenderer(mesh, material);
-	object->AddComponent(renderer);
+	for (Mesh* mesh : meshes) {
+		MeshRenderer* renderer = new MeshRenderer(mesh, material);
+		object->AddComponent(renderer);
+
+		std::cout << mesh->GetPositions().size() << std::endl;
+	}
 	
 
 	Transform* cameraTransform = new Transform();
@@ -61,23 +63,20 @@ int main(int argc, char *args[])
 
 	int counter = 0;
 	Uint32 startTime = SDL_GetTicks();
-
-	glm::mat4 mvp = cameraComponent->GetViewProjectionMatrix();
-	for (int x = 0; x < 4; x++) {
-		for (int y = 0; y < 4; y++) {
-			std::cout << mvp[x][y] << " | ";
-		}
-		std::cout << std::endl;
-	}
+	float deltaTime = 0;
 
 	//game loop
 	while (game->Running()) {
-			
-		float fps = 1.0f/(((1.0f * (SDL_GetTicks() - startTime)) / counter)/1000.0f);
-		RenderSystem::GetInstance()->SetTitle(std::to_string(fps).c_str());
-		startTime = SDL_GetTicks();
+		counter++;
+		if (counter > 1000) {
+			deltaTime = (float)(SDL_GetTicks() - startTime) / ((float)counter*1000.0);
+			float fps = 1.0f / deltaTime;
+			RenderSystem::GetInstance()->SetTitle(std::to_string(fps).c_str());
+			startTime = SDL_GetTicks();
+			counter = 0;
+		}
 
-		rot += 0.001f;
+		rot += deltaTime * 1;
 
 		cameraTransform->SetPosition(glm::vec3(sinf(rot) * 3, 0, cosf(rot) * 3));
 		cameraTransform->LookAt(glm::vec3(0));

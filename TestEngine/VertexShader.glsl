@@ -9,5 +9,7 @@ varying vec2 uv0;
 
 void main(){
 	uv0 = uv;
-	gl_Position = transform * vec4(position, 1.0);
+	vec3 pos = position;
+	pos.y *= -1;
+	gl_Position = transform * vec4(pos, 1.0);
 }

@@ -14,6 +14,8 @@ MeshRenderer::MeshRenderer(Mesh* renderMesh, Material* renderMaterial)
 	this->renderMaterial = renderMaterial;
 
 	RenderSystem::GetInstance()->AddRenderer(this);
+
+	std::cout << "in renderer:" << this->renderMesh->GetPositions().size() << std::endl;
 }
 
 
@@ -32,6 +34,7 @@ void MeshRenderer::AddToEntity(Entity * entity)
 }
 
 void MeshRenderer::Draw() {
+
 	renderMesh->bindMesh();
 	renderMaterial->bind();
 	
@@ -42,7 +45,7 @@ void MeshRenderer::Draw() {
 		mvpProperty->SetValue(GetMvpMatrix());
 	}
 
-	glDrawElements(GL_TRIANGLES, renderMesh->getDrawCount(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, (GLsizei)renderMesh->getDrawCount(), GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, renderMesh->getDrawCount());
 
 	glBindVertexArray(0);

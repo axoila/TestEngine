@@ -49,7 +49,7 @@ glm::mat4 Camera::GetViewMatrix()
 glm::mat4 Camera::GetProjectionMatrix()
 {
 	if (projectionDirty) {
-		projectionMatrix = glm::perspective(fov, aspect, nearPlane, farPlane);
+		projectionMatrix = glm::infinitePerspective(fov, aspect, nearPlane);
 		projectionDirty = false;
 	}
 	return projectionMatrix;

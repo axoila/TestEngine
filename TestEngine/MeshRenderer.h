@@ -18,9 +18,11 @@ public:
 	void Draw() override;
 	glm::mat4 GetMvpMatrix();
 
+	Mesh* renderMesh;
+
 private:
 	Mat4Property * mvpProperty;
-	Mesh* renderMesh;
+	
 	Material* renderMaterial;
 	Transform* transform;
 };
