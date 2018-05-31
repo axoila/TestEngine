@@ -1,19 +1,20 @@
 #include "Mesh.h"
-#include <vector>
 
-Mesh::Mesh(Vertex* vertices, unsigned int numVertices) {
-	drawCount = numVertices;
+#include "OBJ_Loader.h"
+
+Mesh::Mesh(std::vector<glm::vec3>* positions, std::vector<glm::vec2>* texCoords) {
+	drawCount = positions->size();;
 
 	//generate vertex array
 	glGenVertexArrays(1, &vertexArrayObject);
 
-	positions.reserve(numVertices);
-	texCoords.reserve(numVertices);
+	this->positions = *positions;
+	this->texCoords = *texCoords;
 
-	for (unsigned int i = 0; i < numVertices; i++) {
-		positions.push_back(vertices[i].getPos());
-		texCoords.push_back(vertices[i].getUv());
+	for (int i = 0; i < positions->size();i++) {
+		std::cout << this->positions[i].x << "|" << this->positions[i].y << "|" << this->positions[i].z << std::endl;
 	}
+	std::cout << std::endl;
 
 	//bind the vertex array
 	glBindVertexArray(vertexArrayObject);
@@ -22,7 +23,7 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices) {
 	//bind buffer for vertex data
 	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffer[POSITION_VB]);
 	//add data to GPU, 1: the type of data, 2: the size of the data, 3: the data, 4: hint how often the data will be changed
-	glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(positions[0]), &positions[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, positions->size() *sizeof(this->positions[0]), &this->positions[0], GL_STATIC_DRAW);
 
 	//which attribute are we setting up 1: index
 	glEnableVertexAttribArray(0);
@@ -32,7 +33,7 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffer[TEXCOORD_VB]);
 	//add data to GPU, 1: the type of data, 2: the size of the data, 3: the data, 4: hint how often the data will be changed
-	glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, texCoords->size() * sizeof(this->texCoords[0]), &this->texCoords[0], GL_STATIC_DRAW);
 
 	//which attribute are we setting up 1: index
 	glEnableVertexAttribArray(1);
@@ -47,6 +48,16 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices) {
 Mesh::~Mesh()
 {
 	glDeleteVertexArrays(1, &vertexArrayObject);
+}
+
+std::vector<Mesh>& Mesh::FromObj(std::string filePath)
+{
+	objl::Loader load;
+	std::vector<Mesh> meshes;
+	if (load.LoadFile(filePath)) {
+
+	}
+	return meshes;
 }
 
 void Mesh::bindMesh() 

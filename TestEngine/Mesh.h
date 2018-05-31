@@ -2,9 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-
-
-#include "OBJ_Loader.h"
+#include <vector>
 
 class Vertex {
 public:
@@ -27,17 +25,10 @@ private:
 class Mesh
 {
 public:
-	Mesh(Vertex* vertices, unsigned int numVertices);
+	Mesh(std::vector<glm::vec3>* positions, std::vector<glm::vec2>* texCoords);
 	~Mesh();
 
-	static std::vector<Mesh>& FromObj(std::string filePath) {
-		objl::Loader load;
-		std::vector<Mesh> meshes;
-		if (load.LoadFile(filePath)) {
-
-		}
-		return meshes;
-	}
+	static std::vector<Mesh>& FromObj(std::string filePath);
 
 	void bindMesh();
 	GLuint getDrawCount() {

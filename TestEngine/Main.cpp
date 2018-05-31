@@ -21,75 +21,84 @@ int main(int argc, char *args[])
 	game->Init("test");
 
 	
-		Entity* object = new Entity();
+	Entity* object = new Entity();
 
-		Transform* transform = new Transform();
-		object->AddComponent(transform);
+	Transform* transform = new Transform();
+	object->AddComponent(transform);
 
-		Vertex cube[] = {
-			Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
-			Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+	Vertex cube[] = {
+		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
+		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
 
-			Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
-			Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
-
-
-			Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
-			Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-
-			Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-			Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,1)),
 
 
-			Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-			Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
 
-			Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-			Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
-
-
-			Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
-			Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-
-			Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-			Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
+		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,0)),
 
 
-			Vertex(glm::vec3(1, -1, -1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
-			Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
+		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
+		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
 
-			Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
-			Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(0,1)),
+
+
+		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
+
+		Vertex(glm::vec3(1, -1, 1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
+		Vertex(glm::vec3(1, -1, -1),	glm::vec2(1,0)),
+
+
+		Vertex(glm::vec3(1, -1, -1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
+		Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
+
+		Vertex(glm::vec3(1, 1, 1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(1, -1, 1),		glm::vec2(0,1)),
+		Vertex(glm::vec3(1, 1, -1),		glm::vec2(1,0)),
 
 		
-			Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
-			Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
-			Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, -1, -1),	glm::vec2(0,0)),
+		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)),
+		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
 
-			Vertex(glm::vec3(-1, 1, 1),		glm::vec2(1,1)),
-			Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
-			Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)), };
+		Vertex(glm::vec3(-1, 1, 1),		glm::vec2(1,1)),
+		Vertex(glm::vec3(-1, 1, -1),	glm::vec2(1,0)),
+		Vertex(glm::vec3(-1, -1, 1),	glm::vec2(0,1)), };
 
-		Mesh* mesh = new Mesh(cube, sizeof(cube) / sizeof(cube[0]));
+	std::vector<glm::vec3> positions;
+	std::vector<glm::vec2> texCoords;
 
-		Shader* shader = new Shader("./VertexShader.glsl", "./FragmentShader.glsl");
-		Property* texture = new TextureProperty("MainTex", new Texture("./colorgrid.png"));
-		Material* material = new Material(shader);
-		material->SetCull(Material::GREATER);
-		material->SetDepthTest(Material::LESS);
 
-		MeshRenderer* renderer = new MeshRenderer(mesh, material);
-		object->AddComponent(renderer);
+	for (unsigned int i = 0; i < sizeof(cube) / sizeof(cube[0]); i++) {
+		positions.push_back(cube[i].getPos());
+		texCoords.push_back(cube[i].getUv());
+	}
+
+	Mesh* mesh = new Mesh(&positions, &texCoords);
+
+	Shader* shader = new Shader("./VertexShader.glsl", "./FragmentShader.glsl");
+	Property* texture = new TextureProperty("MainTex", new Texture("./colorgrid.png"));
+	Material* material = new Material(shader);
+	material->SetCull(Material::GREATER);
+	material->SetDepthTest(Material::LESS);
+
+	MeshRenderer* renderer = new MeshRenderer(mesh, material);
+	object->AddComponent(renderer);
 	
 
 	Transform* cameraTransform = new Transform();
